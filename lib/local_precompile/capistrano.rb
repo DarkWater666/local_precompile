@@ -24,10 +24,8 @@ namespace :deploy do
     desc 'Actually precompile the assets locally'
     task :prepare do
       run_locally do
-        precompile_env = fetch(:precompile_env) || fetch(:rails_env) || 'production'
-
-        execute "RAILS_ENV=#{precompile_env} DB_ADAPTER=nulldb rake assets:clean"
-        execute "RAILS_ENV=#{precompile_env} DB_ADAPTER=nulldb rake assets:precompile"
+        execute 'RAILS_ENV=production DB_ADAPTER=nulldb rake assets:clean'
+        execute 'RAILS_ENV=production DB_ADAPTER=nulldb rake assets:precompile'
       end
     end
 
