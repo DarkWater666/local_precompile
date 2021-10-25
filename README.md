@@ -1,83 +1,48 @@
-# Locum Best Practices
-This gem makes your configuring deployment on [locum.ru](http://locum.ru/) faster!
-> for Ruby on Rails applications
+# Capistrano Local Precompile
 
-## Features
-
-* Deployment
-  - Capistrano integration
-  - Configuration generator
-  - Custom tasks
-  - Predefined default [settings](lib/capistrano/locum/defaults.rb)
-  - Pretty logs with [Airbrussh gem](https://github.com/mattbrictson/airbrussh)
-  
-* Environment
-  - All secret variables in one file [application](lib/generators/locum/templates/deploy/config/application.yml.tt)
-  - Variables with [Figaro gem](https://github.com/laserlemon/figaro)
-  - Require keys
-  
-* Web server
-  - Unicorn in requirements
-  - Config predefined  
-  
-## Requirements
-
-It is tested and works with:
-
-* MRI >= 2.1
-* Rails >= 4.2
-
-Other versions are untested but might work fine.
-
-## Installation
-
-Add this line to your application's Gemfile into `development` group:
-
-    gem 'locum-best-practices'
-
-And then execute:
-
-    $ bundle
+The slowest part in a rails application is in the assets compiling. So let's throw it out! This gem adds a local build of assets and packs right on your machine and then uploads all the files to the server.
 
 ## Usage
 
-### Install `gem locum` in your system only. Not include it in your gemfile:
+Add local-precompile to your Gemfile:
 
-    gem install locum
-  
-### And execute:
-
-    $ locum init
-    
-    > You need enter login and password from locum hosting account.
-
-### Add deployment configuration:
-
-    $ rails g locum:deploy
-
-This creates the following files, you can edit them for your choice.
-
-```
-├── Capfile
-└── config
-    ├── initializers
-    │   └── figaro.rb
-    ├── deploy
-    │   ├── production.rb
-    │   └── testing.rb
-    ├── environments
-    │   └── testing.rb
-    ├── deploy.rb
-    ├── newrelic.yml
-    ├── database.yml
-    ├── secrets.yml
-    └── application.yml
-├── .editorconfig  
-└── .rubocop.yml
+```ruby
+group :development do
+  gem 'local-precompile', '~> 0.0.1', require: false
+end
 ```
 
-## License
+Then add the following line to your `Capfile`:
 
-This project rocks and uses MIT License (MIT).
+```ruby
+require 'capistrano/local_precompile'
+```
 
-Copyright (c) 2016 DarkCreative Studio
+Remove the following line from your `Capfile`:
+
+```ruby
+require 'capistrano/rails/assets'
+```
+
+Here's the full set of configurable options:
+
+```ruby
+set :precompile_env             # default: fetch(:rails_env) || 'production'
+set :assets_dir                 # default: "public/assets"
+set :packs_dir                  # default: "public/packs"
+set :rsync_cmd                  # default: "rsync -av --delete"
+```
+
+Capistrano supports **dry run** mode. In that case the `rsync` command will not actually be run but only shown in stdout:
+
+```
+cap production deploy --dry-run
+```
+
+## Contributing
+
+Pull requests welcome: fork, make a topic branch, commit (squash when possible) *with tests* and I'll happily consider.
+
+## Copyright
+
+Copyright (c) 2021 Denis Arushanov
