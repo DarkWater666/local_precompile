@@ -15,7 +15,7 @@ end
 Then add the following line to your `Capfile`:
 
 ```ruby
-require 'capistrano/local_precompile'
+require 'local_precompile/capistrano'
 ```
 
 Remove the following line from your `Capfile`:
