@@ -1,13 +1,18 @@
+Rake::Task['deploy:compile_assets'].clear
+
 namespace :load do
   task :defaults do
     set :assets_dir,       'public/assets'
     set :packs_dir,        'public/packs'
     set :rsync_cmd,        'rsync -av --delete'
     set :assets_role,      'web'
+    set :skip_assets,       ENV['skip_assets'] || false
 
-    after 'bundler:install', 'deploy:assets:prepare'
-    after 'deploy:assets:prepare', 'deploy:assets:rsync'
-    after 'deploy:assets:rsync', 'deploy:assets:cleanup'
+    unless fetch(:skip_assets)
+      after 'bundler:install', 'deploy:assets:prepare'
+      after 'deploy:assets:prepare', 'deploy:assets:rsync'
+      after 'deploy:assets:rsync', 'deploy:assets:cleanup'
+    end
   end
 end
 
