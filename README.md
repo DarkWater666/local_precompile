@@ -8,7 +8,7 @@ Add local-precompile to your Gemfile:
 
 ```ruby
 group :development do
-  gem 'local_precompile', '~> 0.1.0', git: 'https://git.finstar.asia/general/webpacker_local_precompile'
+  gem 'local_precompile', '~> 0.3.1', require: false
 end
 ```
 
