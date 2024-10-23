@@ -1,0 +1,45 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.4.2
+  DisplayCopNames: true
+  NewCops: enable
+
+  Exclude:
+    - bin/**/*
+    - db/**/*
+    - test/**/*
+    - node_modules/**/*
+    - tmp/**/*
+    - Gemfile
+    - vendor/**/*
+    - gemfiles/**/*
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/DoubleNegation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Metrics/AbcSize:
+  Max: 25
+Layout/LineLength:
+  Max: 120
+Metrics/MethodLength:
+  Max: 25
+Metrics/BlockLength:
+  Max: 30
+  Exclude:
+    - "Rakefile"
+    - "**/*.rake"
+    - "spec/**/*.rb"
+
+Performance/MethodObjectAsBlock:
+  Enabled: false
+Performance/OpenStruct:
+  Enabled: true
