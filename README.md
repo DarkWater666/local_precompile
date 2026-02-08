@@ -8,7 +8,7 @@ Add local-precompile to your Gemfile:
 
 ```ruby
 group :development do
-  gem 'local_precompile', '~> 0.3.2', require: false
+  gem 'local_precompile', '~> 0.3.3', require: false
 end
 ```
 

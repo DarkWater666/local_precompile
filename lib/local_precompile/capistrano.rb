@@ -1,3 +1,4 @@
+load File.expand_path('../../local_precompile.rb', __FILE__)
 Rake::Task['deploy:compile_assets'].clear
 
 namespace :load do
