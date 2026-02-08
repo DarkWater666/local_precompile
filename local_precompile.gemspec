@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
 
   gem.summary       = 'Local compile assets and packs for Capistrano'
   gem.description   = 'Contains cap tasks'
-  gem.homepage      = 'https://git.finstar.asia/general/webpacker_local_precompile'
+  gem.homepage      = 'https://github.com/DarkWater666/local_precompile'
 
   gem.license       = 'MIT'
 
